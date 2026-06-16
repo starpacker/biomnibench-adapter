@@ -1,0 +1,29 @@
+# BioMniBench Adapter — Python runtime dependencies
+#
+# Most of the framework is TypeScript/Bun (see package.json), but the data
+# hydrator and the per-task evaluation harnesses (llm_judge.py, test.sh +
+# task-specific solvers) call into Python. Install with:
+#
+#   pip install -r requirements.txt
+#
+# For per-task scientific stacks (scanpy, deseq2, lifelines, …) see each
+# task's README and use a fresh virtualenv or conda env.
+
+# -- data hydrator -----------------------------------------------------------
+huggingface_hub>=0.20.0          # download upstream BioMniBench-DA data
+
+# -- LLM judge & API clients -------------------------------------------------
+anthropic>=0.30.0                # Claude judge & solver
+openai>=1.30.0                   # GPT / o1 / o3 judges
+google-generativeai>=0.5.0       # Gemini judges
+requests>=2.31.0
+tenacity>=8.2.0                  # retries for flaky API endpoints
+python-dotenv>=1.0.0
+
+# -- evaluation utilities ----------------------------------------------------
+pandas>=2.0.0
+numpy>=1.24.0
+PyYAML>=6.0
+tomli>=2.0.0; python_version < "3.11"
+rich>=13.0.0
+tqdm>=4.65.0

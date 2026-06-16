@@ -95,29 +95,47 @@ my_claude_biomnibench/
 | Python | 3.10 / 3.11 (for the per-task evaluation envs) |
 | An Anthropic-compatible LLM endpoint | e.g. `ANTHROPIC_BASE_URL` + `ANTHROPIC_MODEL` |
 
-### Install
+### Install everything (recommended one-liner)
 
 ```bash
 git clone https://github.com/starpacker/biomnibench-adapter.git
 cd biomnibench-adapter
+
+# Get a HuggingFace token (free) — required because the upstream BioMniBench-DA
+# dataset is licence-gated. Accept the licence once at:
+#   https://huggingface.co/datasets/phylobio/BiomniBench-DA
+export HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxx
+
+# If you are in mainland China, also set:
+# export HF_ENDPOINT=https://hf-mirror.com
+
+./scripts/bootstrap.sh                          # all 50 tasks (~40 GB)
+# or, for a quick smoke test, only one tiny task:
+# ./scripts/bootstrap.sh da-9-1                 # 0.1 MB, 3 files
+```
+
+What `bootstrap.sh` does, in order:
+
+1. Verifies `bun`, `python3`, `git`.
+2. Runs `bun install` and `pip install -r requirements.txt`.
+3. Clones the dataset repo into `./biomnibench-data/`.
+4. Calls `download_data.py --hydrate-from-hf`, which pulls each task's raw files
+   from `phylobio/BiomniBench-DA` into `biomnibench-data/tasks/<id>/envs/data/`
+   and hardlinks them into the runner-expected `data/` and `visible_data/`
+   mirrors.
+
+### Manual install (if you prefer step-by-step)
+
+```bash
 bun install
+pip install -r requirements.txt
+git clone https://huggingface.co/datasets/starpacker52/biomnibench-organized biomnibench-data
+python biomnibench-data/download_data.py --hydrate-from-hf
 ```
 
-### Get the dataset
+### Configure your LLM endpoint
 
 ```bash
-# Option A — pull from Hugging Face (recommended)
-hf download --repo-type dataset starpacker52/biomnibench-organized \
-  --local-dir /data/biomnibench-organized
-
-# Option B — point at an existing local copy
-export BIOMNIBENCH_TASKS_ROOT=/path/to/biomnibench-organized
-```
-
-### Configure your endpoint
-
-```bash
-# scripts and harness read these from the environment:
 export ANTHROPIC_BASE_URL=https://your-gateway.example.com
 export ANTHROPIC_MODEL=Vendor2/Claude-4.7-opus      # or your model id
 export ANTHROPIC_API_KEY=sk-...
@@ -127,7 +145,7 @@ export ANTHROPIC_API_KEY=sk-...
 
 ```bash
 bun src/harness/evaluation/cli.ts \
-  --task-dir /data/biomnibench-organized/da-1-3 \
+  --task-dir ./biomnibench-data/tasks/da-9-1 \
   --output-root /tmp/biomnibench-runs \
   --max-rounds 3
 ```
