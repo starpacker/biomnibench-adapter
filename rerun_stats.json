@@ -1,0 +1,25 @@
+{
+  "total_studies": 2,
+  "completed_studies": 0,
+  "passed_studies": 0,
+  "failed_studies": 2,
+  "total_subtasks": 17,
+  "passed_subtasks": 0,
+  "failed_subtasks": 0,
+  "start_time": "2026-05-30T21:34:50.241308",
+  "results": [
+    {
+      "study_id": "29713087",
+      "num_subtasks": 7,
+      "status": "error",
+      "error": "'StudyTaskExecutor' object has no attribute 'run'"
+    },
+    {
+      "study_id": "28472509",
+      "num_subtasks": 10,
+      "status": "error",
+      "error": "'StudyTaskExecutor' object has no attribute 'run'"
+    }
+  ],
+  "end_time": "2026-05-30T21:34:50.241738"
+}
