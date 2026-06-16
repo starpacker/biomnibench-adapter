@@ -34,8 +34,10 @@ step "Checking prerequisites"
 command -v bun     >/dev/null || die "bun not found. Install: curl -fsSL https://bun.sh/install | bash"
 command -v python3 >/dev/null || die "python3 not found."
 command -v git     >/dev/null || die "git not found."
+command -v conda   >/dev/null || warn "conda not found — you can still run the harness if you provide your own Python at \$ROOT/shared_venv/bin/python"
 echo "  bun:    $(bun --version)"
 echo "  python: $(python3 --version)"
+[[ -n "$(command -v conda || true)" ]] && echo "  conda:  $(conda --version)"
 
 # 2. Bun deps --------------------------------------------------------------
 step "Installing Bun dependencies"
@@ -47,6 +49,24 @@ step "Installing Python dependencies"
 python3 -m pip install --user --quiet --upgrade pip
 python3 -m pip install --user --quiet -r "$ROOT/requirements.txt"
 echo "  installed huggingface_hub + judge SDKs"
+
+# 3b. Conda env for task execution -----------------------------------------
+step "Setting up shared task-execution venv (scanpy / lifelines / scipy / …)"
+if [[ ! -L "$ROOT/shared_venv" && ! -d "$ROOT/shared_venv" ]]; then
+    if command -v conda >/dev/null; then
+        echo "  creating conda env 'biodsbench' from environment.yml (5-10 min)"
+        conda env create -f "$ROOT/environment.yml" -n biodsbench || \
+            conda env update -f "$ROOT/environment.yml" -n biodsbench
+        CONDA_ROOT="$(conda info --base)"
+        ln -sfn "$CONDA_ROOT/envs/biodsbench" "$ROOT/shared_venv"
+        echo "  linked $ROOT/shared_venv -> $CONDA_ROOT/envs/biodsbench"
+    else
+        warn "skipping conda env — install conda then re-run, or provide your own Python:"
+        warn "    ln -s /path/to/your/python/prefix $ROOT/shared_venv"
+    fi
+else
+    echo "  $ROOT/shared_venv already exists"
+fi
 
 # 4. Pull dataset repo (metadata + per-task harness) ------------------------
 step "Cloning dataset repo $DATASET_REPO"
