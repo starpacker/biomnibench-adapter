@@ -116,19 +116,30 @@ export HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxx
 
 What `bootstrap.sh` does, in order:
 
-1. Verifies `bun`, `python3`, `git`.
+1. Verifies `bun`, `python3`, `git`, `conda`.
 2. Runs `bun install` and `pip install -r requirements.txt`.
-3. Clones the dataset repo into `./biomnibench-data/`.
-4. Calls `download_data.py --hydrate-from-hf`, which pulls each task's raw files
+3. **Creates the `biodsbench` conda env from `environment.yml`** (Python 3.10 +
+   scanpy / anndata / scipy / lifelines / statsmodels / matplotlib / seaborn /
+   umap-learn / …) and symlinks `./shared_venv → $CONDA_PREFIX/envs/biodsbench`
+   — the harness reads from `./shared_venv/bin/python`.
+4. Clones the dataset repo into `./biomnibench-data/`.
+5. Calls `download_data.py --hydrate-from-hf`, which pulls each task's raw files
    from `phylobio/BiomniBench-DA` into `biomnibench-data/tasks/<id>/envs/data/`
    and hardlinks them into the runner-expected `data/` and `visible_data/`
    mirrors.
+
+> **Why a conda env, not pip?** Some task scientific stacks (scanpy + igraph +
+> R interop) only install reliably via conda. If you cannot use conda, you can
+> point `./shared_venv` at any Python prefix that has the packages from
+> `environment.yml` installed.
 
 ### Manual install (if you prefer step-by-step)
 
 ```bash
 bun install
 pip install -r requirements.txt
+conda env create -f environment.yml -n biodsbench
+ln -s "$(conda info --base)/envs/biodsbench" ./shared_venv
 git clone https://huggingface.co/datasets/starpacker52/biomnibench-organized biomnibench-data
 python biomnibench-data/download_data.py --hydrate-from-hf
 ```
