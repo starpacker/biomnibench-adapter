@@ -1,0 +1,1 @@
+/tmp/my_claude_biomnibench_fixed/shared_venv/bin/python: can't open file '/tmp/my_claude_biomnibench_fixed/workspace/experiments/solver.py': [Errno 2] No such file or directory

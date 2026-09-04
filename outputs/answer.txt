@@ -1,0 +1,37 @@
+Shared genetic factors among neonatal metabolites were identified by analyzing GWAS summary statistics from discovery and replication cohorts (20,474 SNPs, 13 traits each) and the metabolite abundance matrix (8,737 samples, 75 metabolites).
+
+**Genomic loci with shared associations:**
+
+1. **chr1:75.6–75.9 Mb (1p31.1) — ACADM gene**: 120 SNPs in this region are associated with 4 medium-chain acylcarnitine traits — C6 (hexanoylcarnitine), C8 (octanoylcarnitine), C8/C2 (ratio), and (C3DC+C4-OH)/C10 (ratio). ACADM encodes medium-chain acyl-CoA dehydrogenase, the rate-limiting enzyme of mitochondrial β-oxidation for C4–C12 substrates. All 51 pleiotropic SNPs (associated with ≥4 traits) map to this single locus.
+
+2. **chr1:53.2 Mb — CPT2 gene**: Associated with C6DC (hexanedioylcarnitine). CPT2 is the inner mitochondrial carnitine palmitoyltransferase essential for fatty acid import.
+
+3. **chr1:46.9 Mb — CYP4A11 gene**: Associated with C10:1 (decenoylcarnitine). CYP4A11 is a fatty acid ω-hydroxylase.
+
+4. **chr5:50.15–50.54 Mb**: 35 SNPs associated with both C10:1 and C6DC (5 at p<5×10⁻⁸, 30 at p<1×10⁻⁵). Both are dicarboxylic/unsaturated acylcarnitines from ω-oxidation.
+
+5. **chr9:129.1 Mb — CRAT gene**: All 127 significant SNPs for C4DC+C5-OH map here. CRAT (carnitine O-acetyltransferase) transfers short-chain acyl groups between CoA and carnitine.
+
+6. **chr12:121.8–122.0 Mb — ACADS, HPD, HNF1A genes**: 66 SNPs associated with both C4 (butyrylcarnitine) and TYR (tyrosine). ACADS is short-chain acyl-CoA dehydrogenase; HPD is 4-hydroxyphenylpyruvate dioxygenase (tyrosine degradation); HNF1A is a liver transcription factor.
+
+7. **chr16:20.5 Mb — ACSM2A/B genes**: 26 SNPs for C8:1 (octenoylcarnitine). ACSM2A/B activate medium-chain fatty acids.
+
+8. **chr22:18.9 Mb — PRODH gene**: 6 SNPs for PRO (proline). PRODH catalyzes the first step of proline degradation.
+
+9. **chr11:68.6 Mb and chr15:78.1 Mb**: Two independent loci for C0 (free carnitine), not shared with other traits.
+
+**Genetic correlations (z-score correlation across all 20,474 SNPs):**
+
+| Trait pair | rG (discovery) | rG (replication) | rP (phenotypic) |
+|-----------|---------------|-----------------|-----------------|
+| C6 vs C8 | 0.811 | 0.835 | 0.738 |
+| C10:1 vs C8:1 | 0.533 | 0.507 | 0.490 |
+| (C3DC+C4-OH)/C10 vs C8/C2 | −0.518 | −0.604 | −0.428 |
+| C4 vs C6 | 0.513 | 0.410 | 0.569 |
+| C8 vs C8/C2 | 0.494 | 0.634 | 0.398 |
+| C10:1 vs C8 | 0.491 | 0.405 | 0.469 |
+| PRO vs TYR | 0.327 | 0.313 | 0.383 |
+
+**Replication validation:** 92.9% direction concordance (550/592), 81.4% replication significance (482/592). Best-replicating: C4, C4DC+C5-OH, TYR (100%). Poorly replicating: C6DC (29.6% concordance), C8:1 (0% replication significance).
+
+**Conclusion:** The strongest shared genetic factors are among medium-chain acylcarnitines (C4, C6, C8, C8/C2, C10:1, C4DC+C5-OH, (C3DC+C4-OH)/C10) regulated by ACADM-dependent β-oxidation on chromosome 1, and among dicarboxylic acylcarnitines (C10:1, C6DC) on chromosome 5 via ω-oxidation. Amino acids PRO and TYR share moderate genetic factors (rG=0.33). Free carnitine (C0) is genetically distinct from acylcarnitines. These findings are consistent with known metabolic pathway organization and validate the shared genetic architecture of the mitochondrial β-oxidation pathway.
